@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+@import "tailwindcss";
+
+* {
+  font-family: "Lora", serif;
+
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.toast-success-custom {
+  background-color: #000 !important;
+  color: white !important;
+  font-weight: bold;
+}
