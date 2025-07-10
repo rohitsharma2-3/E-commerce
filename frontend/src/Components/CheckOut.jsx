@@ -21,8 +21,6 @@ const CheckOut = () => {
     })
 
     const { product, setProduct, payment, setPayment } = useContext(CartContext)
-
-    console.log(product)
     const SubTotal = product.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)
     const shippingFee = SubTotal > 0 ? 10 : 0
     const total = SubTotal + shippingFee
