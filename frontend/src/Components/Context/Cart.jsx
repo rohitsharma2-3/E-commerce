@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { CartContext } from './Context'
 import bin from '../../assets/bin_icon.png'
-import {  Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
 const Cart = () => {
@@ -34,7 +34,7 @@ const Cart = () => {
 
 
     return (
-        <div className='w-10/12 min-h-[80vh] mx-auto '>
+        <div className='w-11/12 md:w-10/12 min-h-[80vh] mx-auto '>
             <h3 className='text-4xl mt-10 mb-10'>
                 <span className='text-gray-500'>YOUR</span>
                 <span className='text-gray-700'> CART</span>
@@ -43,10 +43,12 @@ const Cart = () => {
                 {product.map((item) => (
                     <div key={item._id} className='flex justify-between items-center gap-6 border-y border-gray-300 p-4'>
                         <div className='flex items-center gap-5 w-1/2'>
+
                             <img src={item.image[0]} alt={item.product} className='w-20' />
+
                             <div >
-                                <p className='hidden sm:flex'>{item.product}</p>
-                                <div className='flex flex-col sm:flex-row gap-6 mt-10 items-center'>
+                                <p className='text-xs'>{item.product}</p>
+                                <div className='flex  sm:flex-row gap-6 mt-10 items-center'>
                                     <p className='font-bold'>${item.price}</p>
                                     <div className='border border-gray-300 px-3 py-1 bg-gray-100'>
                                         {item.selectedSize}
