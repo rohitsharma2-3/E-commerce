@@ -3,10 +3,13 @@ import { products } from '../assets/assets'
 import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
 import axios from 'axios'
+import Lottie from 'lottie-react'
+import Camel from '../Components/animation/Camel.json'
 
 const Collection = () => {
 
     const [products, setProducts] = useState([])
+    const [login, setLogin] = useState(false)
     const [filters, setFilters] = useState({
         category: [],
         FormData: '',
@@ -29,15 +32,22 @@ const Collection = () => {
     })
 
     useEffect(() => {
+        setLogin(true)
         axios.get('http://localhost:4000/ecommerce/show')
             .then((res) => {
                 setProducts(res.data)
+                setLogin(false)
             })
             .catch((err) => {
                 console.log("Error =>", err)
             })
     }, [])
 
+    if (login) {
+        return <div className='flex min-h-[45vh] items-center justify-center'>
+            <Lottie animationData={Camel} loop={true} className='w-40' />
+        </div>
+    }
 
     return (
         <div className='w-10/12 mx-auto mt-10 flex flex-col md:flex-row gap-10'>

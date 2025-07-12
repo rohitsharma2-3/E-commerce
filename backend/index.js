@@ -133,7 +133,7 @@ app.post('/ecommerce/login', async (req, res) => {
             user
         })
     } catch (error) {
-        res.status(501).json({ message: "Server Error", error: err.message })
+        res.status(501).json({ message: "Server Error", error: error.message })
     }
 })
 

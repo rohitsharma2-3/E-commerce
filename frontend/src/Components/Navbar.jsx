@@ -43,7 +43,7 @@ const Navbar = () => {
       <div className='flex justify-between items-center border-b w-11/12 mx-auto px-1 py-4 md:w-10/12'>
         <Link to={'/'}>
           <h4 className='text-3xl font-bold'>
-            FOREVER<span className='text-red-600 text-4xl'>.</span>
+            EliteAttire<span className='text-red-600 text-4xl'>.</span>
           </h4>
         </Link>
 

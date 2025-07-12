@@ -5,7 +5,7 @@ const Footer = () => {
         <>
             <div className='w-10/12 mx-auto mt-20 flex flex-col lg:flex-row gap-30'>
                 <div className='w-full lg:1/2'>
-                    <h3 className='text-3xl font-bold'>FOREVER<span className='text-red-500 text-3xl rounded'>.</span></h3>
+                    <h3 className='text-3xl font-bold'>EliteAttire<span className='text-red-500 text-3xl rounded'>.</span></h3>
                     <p className='text-gray-500 mt-10 text-justify'>MERN Stack developer with experience building and deploying scalable web applications. Proficient in React, Node.js, MongoDB, and RESTful APIs. Strong foundation in frontend design with Tailwind CSS and Git version control. Eager to contribute to fast-paced development teams and grow professionally.</p>
                 </div>
                 <div className='flex flex-col md:flex-row justify-between gap-10'>

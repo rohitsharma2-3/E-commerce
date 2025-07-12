@@ -16,6 +16,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import CheckOut from './Components/CheckOut';
 import Order from './Components/Order';
+import Erro from './Components/Erro';
 
 const Home = () => (
   <>
@@ -40,6 +41,7 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<CheckOut />} />
         <Route path="/order" element={<Order />} />
+        <Route path="*" element={<Erro />} />
       </Routes>
       <ToastContainer position="top-right" autoClose={3000} className='p-5 ' />
       <Footer />
