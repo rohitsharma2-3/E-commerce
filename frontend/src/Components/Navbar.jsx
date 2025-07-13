@@ -20,11 +20,13 @@ const Navbar = () => {
   };
 
   // 👇 Check token in cookies
-  useEffect(() => {
-    const hasToken = document.cookie.includes('token');
-    setIsLoggedIn(hasToken);
-  }, []);
-
+ useEffect(() => {
+  axios.get('https://e-commerce-zjcb.onrender.com/ecommerce/check-auth', {
+    withCredentials: true
+  })
+    .then((res) => setIsLoggedIn(true))
+    .catch(() => setIsLoggedIn(false));
+}, []);
   const logout = () => {
     axios.post('https://e-commerce-zjcb.onrender.com/ecommerce/logout', {}, {
       withCredentials: true,
