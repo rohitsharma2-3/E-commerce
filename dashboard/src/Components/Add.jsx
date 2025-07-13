@@ -27,7 +27,7 @@ const Admin = () => {
     e.preventDefault()
     
     const data = new FormData();
-
+  
     image.forEach(img => {
       if (img) data.append('image', img)
     })

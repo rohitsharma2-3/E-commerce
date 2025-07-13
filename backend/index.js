@@ -3,19 +3,20 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const express = require('express')
 const cors = require('cors')
-const { storage } = require('./utils/Cloudinary')
 const app = express()
-const multer = require('multer');
 const Product = require('./Models/ProductModel')
 const User = require('./Models/UserModel')
 const Customer = require('./Models/CustomerData')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const cookie = require('cookie-parser')
+const { storage } = require('./utils/Cloudinary')
+const multer = require('multer');
 const upload = multer({ storage })
+const verifyToken = require('./middleware/Verify')
 
-app.use(express.json());
 const port = process.env.PORT || 4000
+app.use(express.json());
 
 app.use(cors({ origin: true, credentials: true }))
 app.use(cookie())
@@ -90,7 +91,7 @@ app.post('/ecommerce/signup', async (req, res) => {
             password: hash
         })
 
-        let token = jwt.sign({ email }, process.env.SUPER_SECRET_CODE, {
+        let token = jwt.sign({ id: user._id, email: user.email }, process.env.SUPER_SECRET_CODE, {
             expiresIn: '7d',
         })
         res.cookie('token', token)
@@ -124,7 +125,7 @@ app.post('/ecommerce/login', async (req, res) => {
             res.status(400).json('Anything Wrong!')
         }
 
-        let token = jwt.sign({ email }, process.env.SUPER_SECRET_CODE, {
+        let token = jwt.sign({ id: user._id, email: user.email }, process.env.SUPER_SECRET_CODE, {
             expiresIn: '7d',
         })
         res.cookie('token', token)
@@ -139,13 +140,14 @@ app.post('/ecommerce/login', async (req, res) => {
 
 
 // Customer Data
-app.post('/ecommerce/customer', async (req, res) => {
+app.post('/ecommerce/customer', verifyToken, async (req, res) => {
     try {
         const {
-            firstname, lastname, email, street, state, city, zipcode,image,
+            firstname, lastname, email, street, state, city, zipcode, image,
             country, phone, cart, paymentMethod, subTotal, shippingFee, totalAmount, product } = req.body;
 
         const customerDetails = new Customer({
+            userId: req.user.id,
             firstname,
             lastname,
             email,
@@ -160,15 +162,28 @@ app.post('/ecommerce/customer', async (req, res) => {
             totalAmount
         })
         await customerDetails.save()
+        console.log(customerDetails)
         res.status(201).json(customerDetails)
     } catch (error) {
         res.status(500).json({ message: "Server Error" })
     }
 })
 
+// Get orders of logged-in user only
+app.get('/ecommerce/customer/myorders', verifyToken, async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const orders = await Customer.find({ userId })
+        res.status(200).json(orders);
+    } catch (err) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+
 app.get('/ecommerce/customer/show', async (req, res) => {
     try {
-        let customer = await Customer.find({})
+        let customer = await Customer.find().populate('userId');
         res.status(201).json(customer)
     } catch (error) {
         res.status(500).json('Error in Server')

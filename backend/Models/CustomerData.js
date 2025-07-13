@@ -28,9 +28,13 @@ const customerSchema = new mongoose.Schema({
     subTotal: { type: Number, required: true },
     shippingFee: { type: Number, required: true },
     totalAmount: { type: Number, required: true },
-    orderStatus: { type: String, default: 'Pending' },
-    createdAt: { type: Date, default: Date.now }
-
+    orderStatus: {
+        type: String,
+        enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
+        default: 'Pending'
+    },
+    createdAt: { type: Date, default: Date.now },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 });
 
 const Customer = mongoose.model('Customer', customerSchema);

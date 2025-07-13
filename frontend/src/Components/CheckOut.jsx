@@ -41,8 +41,9 @@ const CheckOut = () => {
             totalAmount: total
         }
 
-
-        axios.post('http://localhost:4000/ecommerce/customer', dataToSend)
+        axios.post('http://localhost:4000/ecommerce/customer', dataToSend, {
+            withCredentials: true
+        })
             .then(() => {
                 localStorage.removeItem('product')
                 setProduct([])
