@@ -1,13 +1,25 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CartContext } from './Context'
 import bin from '../../assets/bin_icon.png'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import axios from 'axios'
 
 const Cart = () => {
     const { product, setProduct } = useContext(CartContext)
-    const Cookie = document.cookie.includes('token') ? 'token' : null
+     const [isLoggedIn, setIsLoggedIn] = useState(false)
 
+  useEffect(() => {
+    axios.get('https://e-commerce-zjcb.onrender.com/ecommerce/check-auth', {
+      withCredentials: true
+    })
+      .then(res => {
+        setIsLoggedIn(true)
+      })
+      .catch(err => {
+        setIsLoggedIn(false)
+      })
+  }, [])
     const total = product.reduce((acc, cur) => {
         const price = Number(cur.price) || 0
         const quantity = Number(cur.quantity) || 1
@@ -81,7 +93,7 @@ const Cart = () => {
                     <p>Total</p>
                     <p>${subTotal.toFixed(2)}</p>
                 </div>
-                {Cookie ? <Link to={'/checkout'}>
+                {isLoggedIn ? <Link to={'/checkout'}>
                     <button className='px-8 py-2 bg-black text-white mt-5'>
                         PROCEED TO CHECKOUT
                     </button>
