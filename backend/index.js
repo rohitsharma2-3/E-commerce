@@ -18,10 +18,21 @@ const verifyToken = require('./middleware/Verify')
 const port = process.env.PORT || 4000
 app.use(express.json());
 
+const allowedOrigins = [
+  'https://ecommerce-t9fl.onrender.com',         // customer frontend
+  'https://e-commerce-1-1yfx.onrender.com'        // admin panel
+]
 app.use(cors({
-  origin: 'https://ecommerce-t9fl.onrender.com', // your frontend
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  },
   credentials: true
 }))
+
 app.use(cookie())
 
 app.get('/', (req, res) => {
