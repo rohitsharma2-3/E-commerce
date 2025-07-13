@@ -103,7 +103,7 @@ app.post('/ecommerce/signup', async (req, res) => {
           secure: true,           
           sameSite: 'None',       
           maxAge: 7 * 24 * 60 * 60 * 1000
-    }))
+        })
         res.status(201).json(user)
     } catch (err) {
         console.log(err)
@@ -142,7 +142,7 @@ app.post('/ecommerce/login', async (req, res) => {
           secure: true,         
           sameSite: 'None',       
           maxAge: 7 * 24 * 60 * 60 * 1000
-        }))
+        })
         res.status(201).json({
             message: 'Login Successfull',
             user
