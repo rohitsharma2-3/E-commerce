@@ -151,6 +151,9 @@ app.post('/ecommerce/login', async (req, res) => {
     }
 })
 
+app.get('/ecommerce/check-auth', verifyToken, (req, res) => {
+  res.json({ loggedIn: true, user: req.user });
+});
 
 // Customer Data
 app.post('/ecommerce/customer', verifyToken, async (req, res) => {
