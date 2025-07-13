@@ -18,7 +18,10 @@ const verifyToken = require('./middleware/Verify')
 const port = process.env.PORT || 4000
 app.use(express.json());
 
-app.use(cors())
+app.use(cors({
+  origin: 'https://ecommerce-t9fl.onrender.com', // your frontend
+  credentials: true
+}))
 app.use(cookie())
 
 app.get('/', (req, res) => {
