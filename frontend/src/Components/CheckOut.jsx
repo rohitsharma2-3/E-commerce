@@ -41,7 +41,7 @@ const CheckOut = () => {
             totalAmount: total
         }
 
-        axios.post('http://localhost:4000/ecommerce/customer', dataToSend, {
+        axios.post('https://e-commerce-zjcb.onrender.com/ecommerce/customer', dataToSend, {
             withCredentials: true
         })
             .then(() => {
