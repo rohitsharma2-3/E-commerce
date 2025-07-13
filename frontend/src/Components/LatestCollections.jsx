@@ -19,7 +19,7 @@ const LatestCollections = () => {
 
     if(login) {
         return <div className='flex items-center justify-center'>
-            <Lottie animationData={load} loop={true} className='w-60' />
+            <Lottie animationData={load} loop={true} className='w-20' />
         </div>
     }
 
