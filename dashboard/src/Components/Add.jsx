@@ -37,7 +37,7 @@ const Admin = () => {
     data.append('description', formData.description)
     formData.size.forEach(size => data.append('size', size));
 
-    axios.post('http://localhost:4000/ecommerce/create', data)
+    axios.post('https://e-commerce-zjcb.onrender.com/ecommerce/create', data)
     console.log(data)
     toast.success("Successfully Added")
     setformData({
