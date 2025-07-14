@@ -11,11 +11,11 @@ const Hero = () => {
                     <div className='leading-[30px] px-12 text-sm'>
                         <div className='flex items-center gap-2'>
                             <p className='w-8 md:w-11 h-[2px] bg-gray-700'></p>
-                            <p className='text-sm md:text-3xl'>HOT PICKS</p>
+                            <p className='text-md md:text-3xl'>HOT PICKS</p>
                         </div>
-                        <h3 className='text-sm md:text-4xl text-gray-700'>New Summer Collection</h3>
+                        <h3 className='text-md md:text-4xl text-gray-700'>New Summer Collection</h3>
                         <div className='flex items-center gap-2'>
-                            <p className=' text-sm mt-1 md:text-3xl'>SHOP NOW </p>
+                            <p className=' text-md mt-1 md:text-3xl'>SHOP NOW </p>
                             <p className='w-8 md:w-11 h-[2px] bg-gray-700'></p>
                         </div>
                     </div>
