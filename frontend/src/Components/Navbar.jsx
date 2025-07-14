@@ -33,7 +33,6 @@ const Navbar = () => {
     })
       .then(() => {
         setIsLoggedIn(false);
-        window.location.reload();
       })
       .catch(err => {
         console.log(err);
