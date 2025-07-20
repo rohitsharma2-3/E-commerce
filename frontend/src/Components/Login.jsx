@@ -19,11 +19,7 @@ const Login = () => {
     const onSubmit = (e) => {
         e.preventDefault()
         console.log(formData)
-        setformData({
-            name: '',
-            email: '',
-            password: ''
-        })
+        
     }
 
     const signUp = () => {
