@@ -212,6 +212,13 @@ app.get('/ecommerce/customer/myorders', verifyToken, async (req, res) => {
     }
 });
 
+app.get('/ecommerce/verify', verifyToken, (req, res) => {
+  res.status(200).json({
+    success: true,
+    user: req.user
+  });
+});
+
 
 app.get('/ecommerce/customer/show', async (req, res) => {
     try {
