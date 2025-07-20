@@ -35,7 +35,6 @@ app.use(cors({
   credentials: true
 }));
 
-
 app.use(cookie())
 
 app.get('/', (req, res) => {
