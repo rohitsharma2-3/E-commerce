@@ -15,7 +15,7 @@ const ProductDetail = () => {
     const [selectedSize, setSelectedSize] = useState('')
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/ecommerce/show/${id}`)
+        axios.get(`https://e-commerce-zjcb.onrender.com/ecommerce/show/${id}`)
             .then((res) => {
                 setProducts(res.data)
                 setMainImage(res.data?.image[0])
