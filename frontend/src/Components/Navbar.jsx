@@ -19,11 +19,17 @@ const Navbar = () => {
     setOpen(false);
   };
 
-  // 👇 Check token in cookies
-  useEffect(() => {
-    const hasToken = document.cookie.includes('token');
-    setIsLoggedIn(hasToken);
-  }, []);
+useEffect(() => {
+  axios.get('https://e-commerce-zjcb.onrender.com/ecommerce/verify', {
+    withCredentials: true
+  })
+    .then((res) => {
+      setIsLoggedIn(true); // or setUser(res.data.user) if you want user data
+    })
+    .catch(() => {
+      setIsLoggedIn(false);
+    });
+}, []);
 
   const logout = () => {
     axios.post('https://e-commerce-zjcb.onrender.com/ecommerce/logout', {}, {
