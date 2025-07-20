@@ -8,7 +8,7 @@ const ListItem = () => {
     const [product, setproduct] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:4000/ecommerce/show')
+        axios.get('https://e-commerce-zjcb.onrender.com/ecommerce/show')
             .then((res) => {
                 setproduct(res.data)
                 console.log(res.data)
@@ -19,7 +19,7 @@ const ListItem = () => {
     }, [])
 
     const deleteButton = (id) => {
-        axios.delete(`http://localhost:4000/ecommerce/delete/${id}`)
+        axios.delete(`https://e-commerce-zjcb.onrender.com/ecommerce/delete/${id}`)
         .then(() => {
             setproduct(prev => prev.filter(product => product._id !== id))
         })
