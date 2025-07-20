@@ -6,7 +6,7 @@ const BestSeller = () => {
     const [products, setproducts] = useState([])
 
     useEffect(() => {
-      axios.get('http://localhost:4000/ecommerce/show')
+      axios.get('https://e-commerce-zjcb.onrender.com/ecommerce/show')
       .then((res) => {
         setproducts(res.data)
       })
