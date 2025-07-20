@@ -27,7 +27,7 @@ const Login = () => {
     }
 
     const signUp = () => {
-        axios.post('http://localhost:4000/ecommerce/signup', formData, {
+        axios.post('https://e-commerce-zjcb.onrender.com/ecommerce/signup', formData, {
             withCredentials: true
         })
             .then((res) => {
@@ -40,7 +40,7 @@ const Login = () => {
     }
 
     const loginRoute = () => {
-        axios.post('http://localhost:4000/ecommerce/login', formData, {
+        axios.post('https://e-commerce-zjcb.onrender.com/ecommerce/login', formData, {
             withCredentials: true
         })
             .then((res) => {
