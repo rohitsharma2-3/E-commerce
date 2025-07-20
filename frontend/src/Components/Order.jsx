@@ -8,7 +8,7 @@ const Order = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:4000/ecommerce/customer/myorders', {
+        axios.get('https://e-commerce-zjcb.onrender.com/ecommerce/customer/myorders', {
             withCredentials: true
         })
             .then((res) => {
