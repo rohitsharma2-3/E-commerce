@@ -26,7 +26,7 @@ const Navbar = () => {
   }, []);
 
   const logout = () => {
-    axios.post('http://localhost:4000/ecommerce/logout', {}, {
+    axios.post('https://e-commerce-zjcb.onrender.com/ecommerce/logout', {}, {
       withCredentials: true,
     })
       .then(() => {
