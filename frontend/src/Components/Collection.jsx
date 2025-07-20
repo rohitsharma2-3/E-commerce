@@ -34,7 +34,7 @@ const Collection = () => {
 
     useEffect(() => {
         setLogin(true)
-        axios.get('http://localhost:4000/ecommerce/show')
+        axios.get('https://e-commerce-zjcb.onrender.com/ecommerce/show')
             .then((res) => {
                 setProducts(res.data)
                 setLogin(false)
