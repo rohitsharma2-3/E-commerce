@@ -56,7 +56,7 @@ const CheckOut = () => {
         };
 
         try {
-            await axios.post('http://localhost:4000/ecommerce/customer', dataToSend, {
+            await axios.post('https://e-commerce-zjcb.onrender.com/ecommerce/customer', dataToSend, {
                 withCredentials: true
             });
             localStorage.removeItem('product');
