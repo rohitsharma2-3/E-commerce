@@ -7,7 +7,7 @@ const Orders = () => {
   const [detail, setDetail] = useState([])
 
   useEffect(() => {
-    axios.get('http://localhost:4000/ecommerce/customer/show')
+    axios.get('https://e-commerce-zjcb.onrender.com/ecommerce/customer/show')
       .then((res) => {
         setDetail(res.data)
         console.log(res.data)
