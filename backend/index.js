@@ -117,7 +117,12 @@ app.post('/ecommerce/signup', async (req, res) => {
         let token = jwt.sign({ id: user._id, email: user.email }, process.env.SUPER_SECRET_CODE, {
             expiresIn: '7d',
         })
-        res.cookie('token', token)
+       res.cookie('token', token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: 'None',
+          maxAge: 7 * 24 * 60 * 60 * 1000
+        });
         res.status(201).json(user)
     } catch (err) {
         console.log(err)
@@ -151,7 +156,12 @@ app.post('/ecommerce/login', async (req, res) => {
         let token = jwt.sign({ id: user._id, email: user.email }, process.env.SUPER_SECRET_CODE, {
             expiresIn: '7d',
         })
-        res.cookie('token', token)
+        res.cookie('token', token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: 'None',
+          maxAge: 7 * 24 * 60 * 60 * 1000
+        });
         res.status(201).json({
             message: 'Login Successfull',
             user
