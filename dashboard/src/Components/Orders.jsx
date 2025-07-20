@@ -5,7 +5,6 @@ import axios from 'axios'
 const Orders = () => {
 
   const [detail, setDetail] = useState([])
-  const [status, setStatus] = useState(' ')
 
   useEffect(() => {
     axios.get('http://localhost:4000/ecommerce/customer/show')
@@ -17,6 +16,28 @@ const Orders = () => {
         console.log(err)
       })
   }, [])
+
+  const handleStatusChange = async (orderId, newStatus) => {
+    try {
+      const res = await axios.put(`http://localhost:4000/ecommerce/customer/update-order/${orderId}`, {
+        orderStatus: newStatus
+      });
+
+      if (res.status === 200) {
+        // Corrected setDetail function
+        setDetail(prev =>
+          prev.map(order =>
+            order._id === orderId ? { ...order, orderStatus: newStatus } : order
+          )
+        );
+        console.log("Order status updated");
+      }
+    } catch (error) {
+      console.error("Failed to update order", error);
+    }
+  };
+
+
 
   return (
     <div className='w-11/12 md:w-9/12 mx-auto py-10'>
@@ -32,13 +53,18 @@ const Orders = () => {
                 selectedSize})</p>
               <p>Items: {item.quantity || 1}</p>
               <p className='text-green-600 font-bold'>${item.price * item.quantity}</p>
-              <select className='border px-2 py-1 rounded'>
-                <option>Order Placed</option>
-                <option>Packing</option>
-                <option>Shipped</option>
-                <option>Out for Delivery</option>
-                <option>Delivered</option>
+              <select
+                className='border px-2 py-1 rounded'
+                value={order.orderStatus}
+                onChange={(e) => handleStatusChange(order._id, e.target.value)}
+              >
+                <option value="Pending">Order Placed</option>
+                <option value="Processing">Packing</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Delivered">Delivered</option>
+                <option value="Cancelled">Cancelled</option>
               </select>
+
             </div>
           ))}
 

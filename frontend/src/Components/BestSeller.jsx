@@ -23,7 +23,7 @@ const BestSeller = () => {
             </div>
 
             <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 mt-10 w-11/12 mx-auto'>
-                {products.slice(11, 16).map((product) => {
+                {products.slice(1, 6).map((product) => {
                     return (
                         <Link to={`/product/${product._id}`}
                             onClick={() => window.scrollTo({ top: 0 })}

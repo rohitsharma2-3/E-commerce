@@ -14,6 +14,7 @@ const { storage } = require('./utils/Cloudinary')
 const multer = require('multer');
 const upload = multer({ storage })
 const verifyToken = require('./middleware/Verify')
+const requireLogin = require('./middleware/userLogin')
 
 const port = process.env.PORT || 4000
 app.use(express.json());
@@ -83,6 +84,12 @@ app.post('/ecommerce/signup', async (req, res) => {
         let { name, email, password } = req.body
         console.log(req.body)
 
+        const userCheck = await User.findOne({ email });
+        if (userCheck) {
+            return res.status(400).json({ message: 'User already exists!' });
+        }
+
+
         const salt = await bcrypt.genSalt(10)
         const hash = await bcrypt.hash(password, salt)
         const user = await User.create({
@@ -98,7 +105,7 @@ app.post('/ecommerce/signup', async (req, res) => {
         res.status(201).json(user)
     } catch (err) {
         console.log(err)
-        res.status(500).json('Error', err)
+        res.status(500).json({ message: 'Signup failed', error: err.message });
     }
 })
 
@@ -117,12 +124,12 @@ app.post('/ecommerce/login', async (req, res) => {
 
         let user = await User.findOne({ email })
         if (!user) {
-            res.status(400).json('Anything Wrong!')
+            return res.status(400).json({ message: 'User not found!' });
         }
 
         let CheckPass = await bcrypt.compare(password, user.password)
         if (!CheckPass) {
-            res.status(400).json('Anything Wrong!')
+            return res.status(400).json({ message: 'Incorrect password!' });
         }
 
         let token = jwt.sign({ id: user._id, email: user.email }, process.env.SUPER_SECRET_CODE, {
@@ -189,6 +196,7 @@ app.get('/ecommerce/customer/show', async (req, res) => {
         res.status(500).json('Error in Server')
     }
 })
+
 
 mongoose.connect(process.env.MONGO_DB)
     .then(() => {

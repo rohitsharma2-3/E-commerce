@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Lottie from 'lottie-react'
 import load from '../Components/animation/load.json'
+import { toast } from 'react-toastify';
 
 const LatestCollections = () => {
     const [login, setLogin] = useState(false)
@@ -15,11 +16,14 @@ const LatestCollections = () => {
                 setProducts(res.data)
                 setLogin(false)
             })
+            .catch((err) => {
+                toast.error(`Failed to fetch`);
+            })
     }, [])
 
-    if(login) {
+    if (login) {
         return <div className='flex items-center justify-center'>
-            <Lottie animationData={load} loop={true} className='w-60' />
+            <Lottie animationData={load} loop={true} className='w-10 mt-30' />
         </div>
     }
 
@@ -31,7 +35,7 @@ const LatestCollections = () => {
                 <p className='text-[12px] md:text-[15px] w-3/4 mx-auto text-gray-600 mt-4 leading-snug'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the.</p>
             </div>
             <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-10 w-11/12 mx-auto'>
-                {products.splice(0, 10).map((products) => {
+                {products.reverse().splice(0, 10).map((products) => {
                     return (
                         <Link to={`/product/${products._id}`}
                             onClick={() => window.scrollTo({ top: 0 })}

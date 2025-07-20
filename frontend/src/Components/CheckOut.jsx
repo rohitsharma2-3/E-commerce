@@ -1,13 +1,18 @@
 import React, { useContext, useState } from 'react'
 import stripe from '../assets/stripe_logo.png'
 import razorPay from '../assets/razorpay_logo.png'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { CartContext } from './Context/Context'
 import axios from 'axios'
+import { toast } from 'react-toastify'
+import Lottie from 'lottie-react'
+import load from '../Components/animation/load.json'
+
 
 const CheckOut = () => {
     const navigate = useNavigate()
 
+    const [loading, setLoading] = useState(false)
     const [formData, setFormData] = useState({
         firstname: '',
         lastname: '',
@@ -25,13 +30,22 @@ const CheckOut = () => {
     const shippingFee = SubTotal > 0 ? 10 : 0
     const total = SubTotal + shippingFee
 
+
     const inputHandler = (e) => {
         let { name, value } = e.target
         setFormData({ ...formData, [name]: value })
     }
 
-    const onSubmit = (e) => {
-        e.preventDefault()
+    const onSubmit = async (e) => {
+        e.preventDefault();
+
+        if (product.length === 0) {
+            setLoading(true);
+            toast.error("Cart is empty");
+            console.log("Submit triggered");
+            return;
+        }
+
         const dataToSend = {
             ...formData,
             cart: product,
@@ -39,32 +53,39 @@ const CheckOut = () => {
             subTotal: SubTotal,
             shippingFee: shippingFee,
             totalAmount: total
+        };
+
+        try {
+            await axios.post('http://localhost:4000/ecommerce/customer', dataToSend, {
+                withCredentials: true
+            });
+            localStorage.removeItem('product');
+            setProduct([]);
+            setFormData({
+                firstname: '',
+                lastname: '',
+                email: '',
+                street: '',
+                state: '',
+                city: '',
+                zipcode: '',
+                country: '',
+                phone: ''
+            });
+            toast.success('Order Placed');
+            navigate('/order');
+        } catch (err) {
+            const errorMsg = err.response?.data?.message || "Order failed";
+            toast.error(errorMsg);
+        } finally {
+            setLoading(false);
         }
+    };
 
-        axios.post('http://localhost:4000/ecommerce/customer', dataToSend, {
-            withCredentials: true
-        })
-            .then(() => {
-                localStorage.removeItem('product')
-                setProduct([])
-                setFormData({
-                    firstname: '',
-                    lastname: '',
-                    email: '',
-                    street: '',
-                    state: '',
-                    city: '',
-                    zipcode: '',
-                    country: '',
-                    phone: ''
-                })
 
-                navigate('/order')
-            })
-            .catch((err) => {
-                console.log(err)
-            })
-    }
+    if (loading) return <div className='flex min-h-[45vh] items-center justify-center'>
+        <Lottie animationData={load} loop={true} className='w-10' />
+    </div>
 
     return (
         <div className='w-10/12 mx-auto mt-10'>
@@ -76,36 +97,36 @@ const CheckOut = () => {
                 <div className='w-full'>
                     <div className='flex gap-4 mt-4  '>
                         <div className='w-full'>
-                            <input type="text" placeholder='First Name' name='firstname' value={formData.firstname} onChange={inputHandler} className='border w-full rounded px-3 py-2' />
+                            <input type="text" placeholder='First Name' name='firstname' value={formData.firstname} onChange={inputHandler} className='border w-full rounded px-3 py-2' required />
                         </div>
                         <div className='w-full'>
-                            <input type="text" placeholder='Last Name' name='lastname' value={formData.lastname} onChange={inputHandler} className='border w-full rounded px-3 py-2' />
+                            <input type="text" placeholder='Last Name' name='lastname' value={formData.lastname} onChange={inputHandler} className='border w-full rounded px-3 py-2' required />
                         </div>
                     </div>
                     <div className='mt-4'>
-                        <input type="email" placeholder='Enter Email' name='email' value={formData.email} onChange={inputHandler} className='border w-full rounded px-3 py-2' />
+                        <input type="email" placeholder='Enter Email' name='email' value={formData.email} onChange={inputHandler} className='border w-full rounded px-3 py-2' required />
                     </div>
                     <div className='mt-4'>
-                        <input type="text" placeholder='Enter Street' name='street' value={formData.street} onChange={inputHandler} className='border w-full rounded px-3 py-2' />
+                        <input type="text" placeholder='Enter Street' name='street' value={formData.street} onChange={inputHandler} className='border w-full rounded px-3 py-2' required />
                     </div>
                     <div className='flex gap-4 mt-4  '>
                         <div className='w-full'>
-                            <input type="text" placeholder='Enter City' name='city' value={formData.city} onChange={inputHandler} className='border w-full rounded px-3 py-2' />
+                            <input type="text" placeholder='Enter City' name='city' value={formData.city} onChange={inputHandler} className='border w-full rounded px-3 py-2' required />
                         </div>
                         <div className='w-full'>
-                            <input type="text" placeholder='Enter State' name='state' value={formData.state} onChange={inputHandler} className='border w-full rounded px-3 py-2' />
+                            <input type="text" placeholder='Enter State' name='state' value={formData.state} onChange={inputHandler} className='border w-full rounded px-3 py-2' required />
                         </div>
                     </div>
                     <div className='flex gap-4 mt-4  '>
                         <div className='w-full'>
-                            <input type="number" placeholder='Zipcode' name='zipcode' value={formData.zipcode} onChange={inputHandler} className='border w-full rounded px-3 py-2' />
+                            <input type="number" placeholder='Zipcode' name='zipcode' value={formData.zipcode} onChange={inputHandler} className='border w-full rounded px-3 py-2' required />
                         </div>
                         <div className='w-full'>
-                            <input type="text" placeholder='Country' name='country' value={formData.country} onChange={inputHandler} className='border w-full rounded px-3 py-2' />
+                            <input type="text" placeholder='Country' name='country' value={formData.country} onChange={inputHandler} className='border w-full rounded px-3 py-2' required />
                         </div>
                     </div>
                     <div className='mt-4'>
-                        <input type="number" placeholder='Phone' name='phone' value={formData.phone} onChange={inputHandler} className='border w-full rounded px-3 py-2' />
+                        <input type="number" placeholder='Phone' name='phone' value={formData.phone} onChange={inputHandler} className='border w-full rounded px-3 py-2' required />
                     </div>
                 </div>
 
@@ -145,7 +166,9 @@ const CheckOut = () => {
                         </div>
                     </div>
 
-                    <button className='bg-black text-white py-2 px-10 mt-2'>Place your order</button>
+                    <button type="submit" className='bg-black text-white py-2 px-10 mt-2'>
+                        {loading ? 'Placing Order...' : 'Place your order'}
+                    </button>
                 </div>
             </form>
         </div>

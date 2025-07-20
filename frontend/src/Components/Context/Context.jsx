@@ -8,6 +8,7 @@ export const Context = (props) => {
         const SavedItem = localStorage.getItem('product')
         return SavedItem ? JSON.parse(SavedItem) : []
     })
+    console.log(product)
 
     useEffect(() => {
         localStorage.setItem('product', JSON.stringify(product))

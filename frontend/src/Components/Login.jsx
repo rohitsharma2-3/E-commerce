@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
-
+    const navigate = useNavigate()
     const [login, setLogin] = useState('login')
     const [formData, setformData] = useState({
         name: '',
@@ -29,26 +31,31 @@ const Login = () => {
             withCredentials: true
         })
             .then((res) => {
-                console.log(res.data)
-                window.location.href = '/'
+                toast.success('SignUP Successfully');
+                navigate('/');
+            })
+            .catch((err) => {
+                toast.error(err.response?.data?.message);
             })
     }
+
     const loginRoute = () => {
         axios.post('http://localhost:4000/ecommerce/login', formData, {
             withCredentials: true
         })
             .then((res) => {
                 console.log(res.data)
-                window.location.href = '/'
+                toast.success('Login Successfully');
+                navigate('/');
             })
             .catch((err) => {
-                console.log(err.message)
+                toast.error(err.response?.data?.message);
             })
     }
 
     return (
-        <div className='11/12'>
-            <div className='w-3/3 md:w-1/2 mx-auto p-2'>
+        <div className='10/12'>
+            <div className='w-10/12 md:w-1/2 mx-auto md:p-2'>
                 {login === 'signup' ? <h3 className='text-4xl text-center mt-10'>
                     <span className='text-gray-500'>Sign</span>
                     <span className='text-gray-700'> Up</span>
@@ -62,7 +69,7 @@ const Login = () => {
                         <input type="text" placeholder='Enter your name' name='name' value={formData.name} onChange={onFormHandler} id='name' className='mt-3 w-full px-3 py-3 outline-none border border-gray-400' />
                     </div> : null}
                     <div className='mt-5'>
-                        <label htmlFor="email" className='block'>eamil:</label>
+                        <label htmlFor="email" className='block'>Email:</label>
                         <input type="email" placeholder='Enter your email' name='email' value={formData.email} onChange={onFormHandler} id='email' className='mt-3 w-full px-3 py-3 outline-none border border-gray-400' />
                     </div>
                     <div className='mt-5'>

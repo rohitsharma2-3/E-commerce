@@ -30,7 +30,7 @@ const customerSchema = new mongoose.Schema({
     totalAmount: { type: Number, required: true },
     orderStatus: {
         type: String,
-        enum: ['Pending', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
+        enum: ['Pending', 'Processing', 'Shipped', 'Out for Delivery', 'Delivered'],
         default: 'Pending'
     },
     createdAt: { type: Date, default: Date.now },

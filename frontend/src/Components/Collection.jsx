@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import Lottie from 'lottie-react'
 import Camel from '../Components/animation/Camel.json'
+import { toast } from 'react-toastify';
 
 const Collection = () => {
 
@@ -39,7 +40,7 @@ const Collection = () => {
                 setLogin(false)
             })
             .catch((err) => {
-                console.log("Error =>", err)
+                toast.error(`Failed to fetch`);
             })
     }, [])
 

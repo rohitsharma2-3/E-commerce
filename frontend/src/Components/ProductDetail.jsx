@@ -25,7 +25,13 @@ const ProductDetail = () => {
             })
     }, [id])
 
-    if (!products) return <p className='text-center pt-50'>Loading...</p>
+    if (!products) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <p className="text-xl font-semibold text-gray-600">Loading product details...</p>
+            </div>
+        );
+    }
 
     return (
         <div className='w-10/12 mx-auto'>
